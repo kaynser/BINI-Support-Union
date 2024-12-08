@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BINI SUPPORT UNION</title>
+  <style>
+    /* Existing CSS */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      background-color: #f8f9fa;
+      color: #333;
+    }
+
+    header {
+      background-color: #6c757d;
+      color: #fff;
+      padding: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #007bff;
+      color: #fff;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .candidate {
+      margin: 20px 0;
+      border: 1px solid #ddd;
+      padding: 10px;
+      border-radius: 5px;
+      background-color: #fff;
+      display: inline-block;
+      width: 300px;
+    }
+
+    footer {
+      background-color: #6c757d;
+      color: #fff;
+      padding: 10px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+    /* New CSS for additional styling */
+    .content {
+      margin: 20px;
+    }
+
+    h1 {
+      margin: 0;
+    }
+
+    h2 {
+      color: #007bff;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header Section -->
+  <header>
+    <h1>BINI SUPPORT UNION</h1>
+  </header>
+
+  <!-- Main Content Section -->
+  <div class="content">
+    <h2>WISH VOTING</h2>
+    <p>Select your favorite candidate and cast your vote:</p>
+    <div id="candidates-container">
+      <!-- Candidate buttons will be dynamically populated here -->
+    </div>
+  </div>
+
+  <!-- Footer Section -->
+  <footer>
+    <p>&copy; 2024 BINI SUPPORT UNION</p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // Map of candidates and their corresponding links
+    const candidateLinks = {
+        "Wish 107.5": "https://awards.wish1075.com",
+        "Candidate 2": "https://link-for-candidate-2.com",
+        "Candidate 3": "https://link-for-candidate-3.com",
+        "Candidate 4": "https://link-for-candidate-4.com",
+        "Candidate 5": "https://link-for-candidate-5.com",
+        // Add more candidates and links here
+    };
+
+    // Function to vote
+    function vote(candidate) {
+        // Check if the candidate exists in the map
+        if (candidateLinks[candidate]) {
+            alert(`Vote BINI in ${candidate}!`);
+            // Redirect to the candidate's link
+            window.location.href = candidateLinks[candidate];
+        } else {
+            alert("Invalid candidate selected.");
+        }
+    }
+
+    // Populate candidates dynamically
+    const container = document.getElementById("candidates-container");
+    Object.keys(candidateLinks).forEach(candidate => {
+        const candidateDiv = document.createElement("div");
+        candidateDiv.className = "candidate";
+        candidateDiv.innerHTML = `
+          <h3>${candidate}</h3>
+          <button onclick="vote('${candidate}')">Vote for ${candidate}</button>
+        `;
+        container.appendChild(candidateDiv);
+    });
+  </script>
+</body>
+</html>
