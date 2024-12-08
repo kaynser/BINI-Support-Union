@@ -102,16 +102,19 @@
     };
 
     // Function to vote
-    function vote(candidate) {
-        // Check if the candidate exists in the map
-        if (candidateLinks[candidate]) {
-            alert(`Vote BINI in ${candidate}!`);
-            // Redirect to the candidate's link
-            window.location.href = candidateLinks[candidate];
-        } else {
-            alert("Invalid candidate selected.");
+function vote(candidate) {
+    // Check if the candidate exists in the map
+    if (candidateLinks[candidate]) {
+        alert(`Vote BINI in ${candidate}!`);
+        // Open the candidate's link in a new tab
+        const newTab = window.open(candidateLinks[candidate], "_blank");
+        if (newTab) {
+            newTab.focus(); // Focus on the new tab (optional)
         }
+    } else {
+        alert("Invalid candidate selected.");
     }
+}
 
     // Populate candidates dynamically
     const container = document.getElementById("candidates-container");
