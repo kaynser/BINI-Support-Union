@@ -14,28 +14,37 @@
       background-color: #f8f9fa;
       color: #333;
     }
-
-    header {
-      background-color: #6c757d;
-      color: #fff;
-      padding: 20px;
-    }
+  header {
+    background-color: rgb(122, 202, 210); /* Background color */
+    color: #fff;
+    padding: 20px;
+    display: flex; /* Flexbox for alignment */
+    align-items: center; /* Center-align items vertically */
+    justify-content: center; /* Center-align items horizontally */
+    gap: 20px; /* Space between the logos and text */
+  }
+    .logo {
+    width: 50px; /* Adjust the size of the logos */
+    height: 50px; /* Adjust the size of the logos */
+    object-fit: contain; /* Ensure logos maintain aspect ratio */
+  }
 
     button {
       padding: 10px 20px;
       font-size: 16px;
       margin: 10px;
       border: none;
-      border-radius: 5px;
+      border-radius: 50%;
       cursor: pointer;
       background-color: #007bff;
       color: #fff;
+      font-size: 24px; /* Bigger arrow */
+      width: 50px;
+      height: 50px;
     }
-
     button:hover {
       background-color: #0056b3;
     }
-
     .candidate {
       margin: 20px 0;
       border: 1px solid #ddd;
@@ -45,7 +54,6 @@
       display: inline-block;
       width: 300px;
     }
-
     footer {
       background-color: #6c757d;
       color: #fff;
@@ -54,26 +62,87 @@
       bottom: 0;
       width: 100%;
     }
-
     /* New CSS for additional styling */
     .content {
       margin: 20px;
     }
-
-    h1 {
-      margin: 0;
+ h1 {
+    margin: 0; /* Remove default margin */
+    font-size: 24px; /* Adjust font size if necessary */
+  }
     }
-
     h2 {
       color: #007bff;
     }
+    /* Styling for media player */
+    .media-player {
+      margin: 20px auto;
+      width: 80%;
+      max-width: 600px;
+      padding: 20px;
+      border: 1px solid #ddd;
+      background-color: #fff;
+      border-radius: 10px;
+    }
+
+    .media-player audio {
+      width: 100%;
+    }
+/* Adjust the candidates container to provide space at the bottom */
+#candidates-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin-top: 20px;
+    padding-bottom: 50px;  /* Add padding to prevent overlap with footer */
+}
+
+/* Style for candidate buttons */
+.candidate button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: #007bff;
+    color: #fff;
+}
+
+.candidate button:hover {
+    background-color: #0056b3;
+}
+
+/* Adjust the footer */
+footer {
+    background-color: #6c757d;
+    color: #fff;
+    padding: 10px;
+    position: relative; /* Ensure footer is positioned normally */
+    width: 100%;
+    margin-top: 20px;  /* Add some space above the footer */
+}
+
+
   </style>
 </head>
 <body>
+
   <!-- Header Section -->
-  <header>
-    <h1>BINI SUPPORT UNION</h1>
-  </header>
+<header>
+  <img src="logo1.png" alt="Logo 1" class="logo"> <!-- First logo -->
+  <h1>BINI SUPPORT UNION</h1>
+  <img src="logo2.png" alt="Logo 2" class="logo"> <!-- Second logo -->
+</header>
+
+
+  <!-- Media Player Section -->
+  <div class="media-player">
+    <audio id="audioPlayer" controls autoplay loop>
+      <source src="BINI/BINI - 8.mp3" type="audio/mp3">
+      Your browser does not support the audio element.
+    </audio>
+    <br>
+    <!-- "Next" Button -->
+    <button id="nextButton">&#8594;</button>  <!-- Right arrow for next song -->
+  </div>
 
   <!-- Main Content Section -->
   <div class="content">
@@ -89,8 +158,48 @@
     <p>&copy; 2024 BINI SUPPORT UNION</p>
   </footer>
 
-  <!-- JavaScript -->
   <script>
+    // Array of song paths (28 songs)
+    const songs = [
+      "BINI/BINI - 8.mp3", "BINI/BINI - Ang Huling Chacha.mp3", "BINI/BINI - B HU U R.mp3", "BINI/BINI - Bata Kaya Mo.mp3", 
+      "BINI/BINI - Blooming.mp3", "BINI/BINI - Born To Win.mp3", "BINI/BINI - Cherry On Top.mp3", "BINI/BINI - Da Coconut Nut.mp3",
+      "BINI/BINI - Diyan Ka Lang.mp3", "BINI/BINI - Golden Arrow.mp3", "BINI/BINI - Here With You.mp3", "BINI/BINI - Huwag Muna Tayong Umuwi.mp3",
+      "BINI/BINI - I Feel Good.mp3", "BINI/BINI - Kapit Lang.mp3", "BINI/BINI - Karera.mp3", "BINI/BINI - Kinikilig.mp3",
+      "BINI/BINI - Lagi.mp3", "BINI/BINI - Love Yourself.mp3", "BINI/BINI - Made for all.mp3", "BINI/BINI - Na Na Na.mp3",
+      "BINI/BINI - Na Na Nandito Lang.mp3", "BINI/BINI - No Fear.mp3", "BINI/BINI - Pantropiko.mp3", "BINI/BINI - Pit A Pat.mp3",
+      "BINI/BINI - Salamin Salamin.mp3", "BINI/BINI - Strings.mp3", "BINI/BINI - Super Crush.mp3", "BINI/BINI - UP.mp3",
+      
+    ];
+
+    // Keep track of the current song index
+    let currentSongIndex = 0;
+
+    // Function to change the song
+    function changeSong(songPath) {
+      var audioPlayer = document.getElementById("audioPlayer");
+      var audioSource = audioPlayer.querySelector("source");
+
+      // Update the source of the audio
+      audioSource.src = songPath;
+      
+      // Load the new song and start playing
+      audioPlayer.load(); // Reload the audio player with the new source
+      audioPlayer.play(); // Start playing the new song
+    }
+
+    // Change to the next song
+    function nextSong() {
+      currentSongIndex = (currentSongIndex + 1) % songs.length; // Loop back to the first song after the last
+      changeSong(songs[currentSongIndex]);
+    }
+
+    // Add an event listener to the "Next" button
+    const nextButton = document.getElementById("nextButton");
+    nextButton.addEventListener("click", nextSong);
+
+    // Initial song setup
+    changeSong(songs[currentSongIndex]);
+
     // Map of candidates and their corresponding links
     const candidateLinks = {
         "Wish 107.5": "https://awards.wish1075.com",
@@ -98,35 +207,36 @@
         "Candidate 3": "https://link-for-candidate-3.com",
         "Candidate 4": "https://link-for-candidate-4.com",
         "Candidate 5": "https://link-for-candidate-5.com",
+        "Candidate 6": "https://link-for-candidate-5.com",
+        "Candidate 7": "https://link-for-candidate-5.com",
+        "Candidate 8": "https://link-for-candidate-5.com",
         // Add more candidates and links here
     };
 
     // Function to vote
-function vote(candidate) {
-    // Check if the candidate exists in the map
-    if (candidateLinks[candidate]) {
-        alert(`Vote BINI in ${candidate}!`);
-        // Open the candidate's link in a new tab
-        const newTab = window.open(candidateLinks[candidate], "_blank");
-        if (newTab) {
-            newTab.focus(); // Focus on the new tab (optional)
+    function vote(candidate) {
+        // Check if the candidate exists in the map
+        if (candidateLinks[candidate]) {
+            alert(`Vote BINI in ${candidate}!`);
+            // Open the candidate's link in a new tab
+            window.open(candidateLinks[candidate], "_blank");
+        } else {
+            alert("Invalid candidate selected.");
         }
-    } else {
-        alert("Invalid candidate selected.");
     }
-}
 
-    // Populate candidates dynamically
-    const container = document.getElementById("candidates-container");
-    Object.keys(candidateLinks).forEach(candidate => {
-        const candidateDiv = document.createElement("div");
-        candidateDiv.className = "candidate";
-        candidateDiv.innerHTML = `
-          <h3>${candidate}</h3>
-          <button onclick="vote('${candidate}')">Vote for ${candidate}</button>
-        `;
-        container.appendChild(candidateDiv);
-    });
+// Populate candidates dynamically
+const container = document.getElementById("candidates-container");
+Object.keys(candidateLinks).forEach(candidate => {
+    const candidateDiv = document.createElement("div");
+    candidateDiv.className = "candidate";
+    candidateDiv.innerHTML = ` 
+      <h3>${candidate}</h3>
+      <button onclick="vote('${candidate}')">&#x2794;</button> <!-- Right arrow symbol -->
+    `;
+    container.appendChild(candidateDiv);
+});
+
   </script>
 </body>
 </html>
